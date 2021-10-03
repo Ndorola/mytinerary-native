@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, TextInput, TouchableWithoutFeedback, ScrollView, Keyboard, ImageBackground } from 'react-native'
-import Header from '../components/Header'
-import Menu from '../components/Menu'
+import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, TextInput, TouchableWithoutFeedback, ScrollView, Keyboard, ImageBackground, TouchableOpacity } from 'react-native'
+import Footer from "../components/Footer"
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import citiesActions from "../redux/actions/citiesActions";
+import City from './City';
 // import Loader from "../components/Loader";
 
 const Cities = (props) => {
@@ -17,9 +17,9 @@ const Cities = (props) => {
                 await props.getCities()
             } catch(error) {
                 console.log('alert')
-                setTimeout(() => {
-                    props.history.push('/')
-                }, 3000)
+                // setTimeout(() => {
+                //     props.history.push('/')
+                // }, 3000)
             }
             // setLoading(false)
         }
@@ -36,7 +36,6 @@ const Cities = (props) => {
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-                <Header />
                 <View>
                     <Text>Find Your Adventure!</Text>
                 </View>
@@ -50,14 +49,18 @@ const Cities = (props) => {
                 <ScrollView>
                 {(props.searchedCities.length !== 0) ? props.searchedCities.map ((city, index) => {
                 return (
-                    <View key={index} to={`/city/${city._id}`}>
-                        <View>
+                    <View key={index}>
+                        <TouchableOpacity onPress={() => {
+                                props.navigation.navigate('city', {
+                                    id: city._id
+                                })
+                            }}>
                             <View>
                                 <ImageBackground source={{uri:`https://nd-mytinerary.herokuapp.com/assets/fotos/${city.img}`}} style={styles.boxCity}>
                                     <Text>{city.features}</Text>
                                 </ImageBackground>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 )
             }): <View >
@@ -66,19 +69,19 @@ const Cities = (props) => {
                 </View>
             }
         </ScrollView>
-        <Menu />       
+        <Footer />       
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-        marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
+        // marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
         flex: 1
     },
     boxCity: {
-        width: '50',
-        height: '50',
+        width: 50,
+        height: 50,
         resizeMode: 'cover',
     }
 })
@@ -86,6 +89,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         searchedCities: state.cities.searchedCities,
+        citiesList: state.cities.citiesList
     }
 }
 

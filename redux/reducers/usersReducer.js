@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 const usersReducer = (state = {token: null, name: null, url: null, userId: null, countries: []}, action) => {
     switch(action.type) {
 

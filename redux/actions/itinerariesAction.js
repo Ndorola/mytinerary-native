@@ -13,15 +13,37 @@ const itinerariesActions = {
         }
     },
 
-    getActivities: (id) => {
-        return async (dispatch) => {
+    // getActivities: (id) => {
+    //     console.log('estoy en la action')
+    //     return async (dispatch) => {
+    //             let response = await axios.get(`https://nd-mytinerary.herokuapp.com/api/activities/${id}`)
+    //             let data = response.data.response
+    //             console.log(response.data.response + ' action')
+    //             return data
+    //             // if (!response.data.success) {
+    //             //     throw new Error ('Ups! The server is down'),
+    //             //     console.log('Ups! The server is down')
+    //             // }
+    //     }
+    // },
+    getActivities: (id)=>{
+        return async (dispatch, getState)=>{
+            try{
+                // console.log(itineraryId)
                 let response = await axios.get(`https://nd-mytinerary.herokuapp.com/api/activities/${id}`)
-                let data = response.data.response
-                return data
-                // if (!response.data.success) {
-                //     throw new Error ('Ups! The server is down'),
-                //     console.log('Ups! The server is down')
-                // }
+                // console.log(response.data)
+                if(response.data.success){
+                    let data = response.data.response
+                    console.log('la data')
+                    console.log(data)
+                    return({sucess:true, response:response.data.response})
+                }else{
+                    throw new Error('Backend-BD')
+
+                }
+            }catch(err){
+                return{success:false, response:err.message}
+            }
         }
     },
 

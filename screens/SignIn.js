@@ -1,8 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Image, StatusBar, SafeAreaView, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Image, StatusBar, ImageBackground, TouchableHighlight, SafeAreaView, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { useState } from "react"
 import { connect } from "react-redux"
 import userActions from "../redux/actions/usersActions"
+import Footer from "../components/Footer"
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 // import {} from '@expo/vector-icons'
 
 const SignIn = (props) => {
@@ -14,13 +17,6 @@ const SignIn = (props) => {
 
     const [visible, setVisible] = useState(false)
 
-    // const TextInputChange = (e) => {
-    //     setAddUser({
-    //         ...addUser,
-    //         name : e.nativeEvent.text
-    //     })
-    // }
-    // console.log(addUser)
 
     const submitData = async (e) => {
         e.preventDefault()
@@ -43,90 +39,163 @@ const SignIn = (props) => {
         }
     }
 
-    // const responseGoogle = async (response) => {
-    //     let userGoogle = {
-    //         email: response.profileObj.email,
-    //         password: response.profileObj.googleId,
-    //         signInGoogle: true
-    //     }
-    //     try {
-    //         await props.signIn(userGoogle)
-    //     } catch (error) {
-    //         console.log('Authentication Error')
-    //         alert('Authentication Error')
-    //     }
-    // }
-
-    return (
+    return  (
         <SafeAreaView style={styles.mainContainer}>
-            <Text>Sign In</Text>
-            <View className="mainForm">
-            <View>
-                <TouchableWithoutFeedback onPress={() => {
-                    Keyboard.dismiss()
-                }}>
-                    <View className="formBox">
-                        <Text>Welcome back!</Text>
-                        <Text>Sign in to discover and connect with MYtinerary's global community</Text>
-                        <View>
-                            <TextInput
-                                name="email"
-                                type="text"
-                                placeholder="Enter your email"
-                                onChange={(e) => setAddUser({...addUser, email: e.nativeEvent.text})}
+            <ImageBackground source={{uri:'https://i.postimg.cc/tCWFSBsX/logueo.png'}} style={styles.background}>
+            <View style={styles.mainForm} action="/users/signup" method="POST">
+                <View style={styles.form}>
+                        <Text style={styles.title}>Welcome back!</Text>
+                        <Text style={styles.subtitle}>Sign in to discover and connect with MYtinerary's global community</Text>
+                        <Input
+                        style={styles.input}
+                        leftIcon={
+                            <Icon
+                            name='at'
+                            size={24}
+                            color='orange'
                             />
-                        </View>
-                        <View>
-                            <TextInput
-                                name="password"
-                                type="password"
-                                placeholder="Password"
-                                onChange={(e) => setAddUser({...addUser, password: e.nativeEvent.text})}
-                                keyboardType= 'numeric'
+                        }
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        onChange={(e) => setAddUser({...addUser, email: e.nativeEvent.text})}
+                        errorStyle={{ color: 'red' }}
+                        errorMessage='ENTER A VALID ERROR HERE'
+                        color= 'orange'
+                        placeholderTextColor= 'grey'
+                        />
+                        <Input
+                        style={styles.input}
+                        leftIcon={
+                            <Icon
+                            name='lock'
+                            size={24}
+                            color='orange'
                             />
-                        </View>
-                        <TouchableOpacity onPress={() => {console.log('soy el boton')}}>
-                            <View className="buttonsForm">
-                                <Text className="btnForm" onPress={submitData}>Sign in</Text>
-                                {/* <GoogleLogin
-                                    className="btnGoogle"
-                                    clientId="1089874556679-8r15bisu1jthcot1eudgm00uaesutfrf.apps.googleusercontent.com"
-                                    buttonText="Sign in with Google"
-                                    onSuccess={responseGoogle}
-                                    onFailure={responseGoogle}
-                                    cookiePolicy={'single_host_origin'}
-                                />, */}
-                            </View>
-                            <Modal visible={visible} animationType='fade'>
-                                <Text>Bienvenido {addUser.email}</Text>
-                            </Modal>
-                        </TouchableOpacity>
-                        <View>
-                            <Text>Don't have an account?</Text>
-                            {/* <Text to="/signup">Sign up here!</Link>  */}
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-            </View>
-                <View>
-                    {/* <Image className="imgLog" src="/assets/signUp.png" alt="usuer"/> */}
+                        }
+                        secureTextEntry={true}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setAddUser({...addUser, password: e.nativeEvent.text})}
+                        keyboardType= 'numeric'
+                        errorStyle={{ color: 'red' }}
+                        errorMessage='ENTER A VALID ERROR HERE'
+                        color= 'orange'
+                        placeholderTextColor= 'grey'
+                        />
                 </View>
-        </View>
+                <View style={styles.botonera}>
+                    <TouchableOpacity>
+                        <View style={styles.boxButton}>
+                            <Text style={styles.button} onPress={submitData}>Sign In</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.boxTextLogueo}>
+                        <Text style={styles.textLogueo}>Don't have an account?</Text>
+                        <TouchableHighlight style={styles.botonAction}>
+                            <Text style={styles.textAction} onPress={() => {props.navigation.navigate('signup')}}>Sign up here!</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </View>
+            </ImageBackground>
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
-        flex: 1
-    },
-})
 
 const mapDispatchToProps = {
     signUp: userActions.signUp,
     signIn: userActions.signIn
 }
 
-
 export default connect(null, mapDispatchToProps) (SignIn)
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        backgroundColor: 'white',
+        flex: 1
+    },
+    mainForm: {
+        marginTop: '8%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    background: {
+        height: '100%',
+        resizeMode: 'cover',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    title: {
+        textAlign: 'center',
+        color: 'orange',
+        fontSize: 24,
+        fontWeight: '500'
+    },
+    subtitle: {
+        textAlign: 'center',
+        color: 'orange',
+        fontSize: 18,
+        fontWeight: '400',
+        marginBottom: '10%'
+    },
+    input: {
+        marginLeft: '10%'
+    },
+    select: {
+        color: 'orange',
+        marginLeft: '15%',
+    },
+    form: {
+        width: '80%',
+        marginTop: '10%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    botonera: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '10%'
+    },
+    boxButton: {
+        backgroundColor: 'white',
+        width: '40%',
+        padding: 10,
+        paddingHorizontal: 20,
+        borderRadius: 25,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        marginBottom: '4%'
+    },
+    button: {
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: '600',
+        color: 'orange',
+    },
+    boxTextLogueo: {
+        width: '80%',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    textLogueo: {
+        color: 'grey',
+        fontSize: 16,
+        marginTop: '4%'
+    },
+    textAction: {
+        color: 'orange',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    botonAction: {
+        marginTop: '4%'
+    }
+})

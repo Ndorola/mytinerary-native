@@ -1,34 +1,29 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, StatusBar, Platform } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Header from '../components/Header'
-import Menu from '../components/Menu'
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native'
+import Footer from "../components/Footer"
+import MyCarousel from '../components/MyCarousel'
 
-const Welcome = () => {
+const Welcome = (props) => {
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <Header />
-            <View style={styles.mainWelcome}>
-                <View style={styles.backgroundBox}>
-                    <ImageBackground  source={{uri:'https://i.postimg.cc/TwhhTnS4/imgcall.png'}} style={styles.boxCall}>
-                        <View style={styles.callToAction}>
-                            <Text style={styles.callH2}>What are you waiting for?</Text>
-                            <Text style={styles.callP}>Feel free to check our itineraries and activities!</Text>
-                            <TouchableOpacity onPress={() => {console.log('soy el boton')}}>
-                                <View style={styles.boxButton}>
-                                    <Text style={styles.buttonCall} onPress={() => {props.navigation.navigate('cities')}}>GO THERE!</Text>
-                                </View>
-                            </TouchableOpacity>
+        <View style={styles.mainContainer}>
+            <ScrollView style={styles.scroll}>
+            <View style={styles.boxHero}>
+                <ImageBackground source={{uri:'https://i.postimg.cc/qqQ7h3b6/herochiqui.png'}} style={styles.hero}>
+                    <Image source={{uri:'https://i.postimg.cc/L8dd982B/loguito.png'}} style={styles.logo}/>
+                    <Text style={styles.callP}>Feel free to check our itineraries and activities!</Text>
+                    <TouchableOpacity>
+                        <View style={styles.boxButton}>
+                            <Text style={styles.buttonCall} onPress={() => {props.navigation.navigate('cities')}}>GO THERE!</Text>
                         </View>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxCarousel}>
-                    <Text>Popular Mytineraries</Text>
-                    <Text>boxCarousel</Text>
-                </View>
+                    </TouchableOpacity>
+                </ImageBackground>
             </View>
-            <Menu />
-        </SafeAreaView>
+            <View style={styles.boxCarousel}>
+                <MyCarousel />
+            </View>
+            </ScrollView>
+            <Footer />
+        </View>
     )
 }
 
@@ -36,7 +31,7 @@ export default Welcome
 
 const styles = StyleSheet.create({
     mainContainer: {
-        marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
+    //     marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
         flex: 1
     },
     mainWelcome: {
@@ -46,46 +41,32 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         justifyContent: 'space-around'
     },
-    backgroundBox: {
-        width: '90%',
-        height: '50%',
-        borderRadius: 25,
-        backgroundColor: '#ffffff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginBottom: 50,
+    boxHero: {
+        width: '100%',
+        height: '60%',
+        marginBottom: '1.5%'
     },
-    boxCall: {
-        // flex: 1,
+    hero: {
         height: '100%',
         resizeMode: 'cover',
         justifyContent: 'center',
+        alignItems: 'center',
     },
-    callToAction: {
-        height: '90%',
-        padding : 20,
-        justifyContent: 'space-evenly',
-    },
-    callH2:{
-        fontWeight: 'bold',
-        fontSize: 35,
-        color: 'rgb(245, 153, 0)',
+    logo: {
+        width: '75%',
+        height: '40%'
     },
     callP: {
         fontSize: 18,
-        color: 'rgb(238, 42, 132)',
+        color: 'white',
         width: '75%',
+        textAlign: 'center',
+        fontWeight: '600'
     },
     boxButton: {
-        backgroundColor: 'rgb(238, 42, 132)',
+        backgroundColor: 'white',
         width: '40%',
-        padding: 5,
+        padding: 7,
         borderRadius: 25,
         shadowColor: "#000",
         shadowOffset: {
@@ -95,26 +76,16 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        marginVertical: '5%'
     },
     buttonCall: {
         fontSize: 18,
         textAlign: 'center',
-        fontWeight: 'bold',
-        color: 'white'
+        fontWeight: '600',
+        color: 'orange'
     },
     boxCarousel: {
         width: '90%',
-        height: '50%',
-        borderRadius: 25,
-        backgroundColor: '#ffffff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginBottom: 30
+        height: '100%'
     }
 })

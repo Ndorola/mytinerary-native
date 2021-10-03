@@ -5,16 +5,17 @@ import Cities from '../screens/Cities'
 import SignUp from '../screens/SignUp'
 import SignIn from '../screens/SignIn'
 import City from '../screens/City'
-import { StyleSheet, Image, SafeAreaView, } from "react-native";
+import { StyleSheet, Image, SafeAreaView, Text, Button, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from 'react';
 import userActions from "../redux/actions/usersActions"
 import { connect } from "react-redux"
 import MainNavStack from './MainNavStack';
+import LogOut from '../screens/LogOut';
 
 const Drawer = createDrawerNavigator()
 
-const Navigator = () => {
+const Navigator = (props) => {
 
     useEffect(()=>{
         const storage= async()=>{
@@ -30,25 +31,57 @@ const Navigator = () => {
         <Drawer.Navigator >
             <Drawer.Screen name="welcomeDr"
                 component={MainNavStack} options={{
-                title: 'WELCOME',
-                headerTintColor: 'white',
+                title: 'Welcome',
+                headerTintColor: 'orange',
                 headerStyle: {
-                backgroundColor: '#0b3f78'
+                backgroundColor: 'white'
                 },
-                headerShown: false,
+                headerShown: true,
                 // headerRight: () => <Image source={require("../assets/logo.png")} />
             }}/>
             <Drawer.Screen name="citiesDr" component={Cities} options={{
-                title: 'CITIES',
-                headerTintColor: 'white',
+                title: 'Cities',
+                headerTintColor: 'orange',
                 headerStyle: {
-                    backgroundColor: '#0b3f78'
+                backgroundColor: 'white'
                 },
                 // headerRight: () => <Image source={require("../assets/logo.png")} />
             }}/>
-            <Drawer.Screen name="signupDr" component={SignUp}/>
-            && <Drawer.Screen name="signinDr" component={SignIn}/>
-            <Drawer.Screen name="cityDr" component={City}/>
+            {!props.token && <Drawer.Screen name="signupDr" component={SignUp} options={{
+                title: 'Sign Up',
+                headerTintColor: 'orange',
+                headerStyle: {
+                backgroundColor: 'white'
+                },
+                // headerRight: () => <Image source={require("../assets/logo.png")} />
+            }}/>}
+            {!props.token && <Drawer.Screen name="signinDr" component={SignIn} options={{
+                title: 'Sign In',
+                headerTintColor: 'orange',
+                headerStyle: {
+                backgroundColor: 'white'
+                },
+                // headerRight: () => <Image source={require("../assets/logo.png")} />
+            }}/>}
+            {props.token && <Drawer.Screen name="logoutDr" component={LogOut} options={{
+                title: 'Log Out',
+                headerTintColor: 'orange',
+                headerStyle: {
+                backgroundColor: 'white'
+                },
+                // headerRight: () => <Image source={require("../assets/logo.png")} />
+            }}/>}
+            <Drawer.Screen name="city" component={City} options={{
+                title: 'City',
+                headerTintColor: 'orange',
+                headerStyle: {
+                backgroundColor: 'white'
+                },
+                headerLeft: () => null,
+                headerRight: () => <View>
+                <Button onPress={() => props.navigation.goBack()} title="Go back" />
+                </View>
+            }}/>
         </Drawer.Navigator>
 
     )
