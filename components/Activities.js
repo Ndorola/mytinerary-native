@@ -16,17 +16,14 @@ const Activities = (props) => {
 
     return (
         <View>  
-        {/* <Text>{props.activities}</Text>  */}
-                <View>
-                    {activitiesByIt.map((activity => (
-                        <View key={activity._id} >
-                            {/* <Image src={`/assets/activities/${activity.img}`} /> */}
-                            <View >
-                                <Text>{activity.title}</Text>
-                            </View>
-                        </View>
-                    )))}
-            </View>
+            {activitiesByIt.map((activity, index => (
+                <View  >
+                    <Image key={index} source={{uri:`https://nd-mytinerary.herokuapp.com/assets/itineraries/${activity.img}`}} />
+                    <View >
+                        <Text>{activity.title}</Text>
+                    </View>
+                </View>
+            )))}
         </View>
     )
 }

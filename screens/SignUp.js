@@ -22,8 +22,6 @@ const SignUp = (props) => {
     
     console.log(addUser)
 
-    // var countries = ["Argentina", "Bahamas", "Barbados", "Belize", "Bolivia", "Brazil", "Canada", "Chile", "Colombia", "Costa Rica", "Cuba", "Dominica", " Ecuador "," El Salvador "," United States "," Granada "," Guatemala "," Guyana "," Haiti "," Honduras "," Jamaica "," Mexico "," Nicaragua "," Panama "," Paraguay "," Peru "," Dominican Republic "," Santa Lucia "," Surinam "," Uruguay "," Venezuela "]
-
     const submitData = async (e) => {
         e.preventDefault()
         try {

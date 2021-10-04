@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import citiesActions from "../redux/actions/citiesActions";
 import City from './City';
-// import Loader from "../components/Loader";
+import Loader from "../components/Loader";
+import { FontAwesome } from '@expo/vector-icons'
 
 const Cities = (props) => {
     
-    // const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function getCities() {
@@ -21,14 +22,14 @@ const Cities = (props) => {
                 //     props.history.push('/')
                 // }, 3000)
             }
-            // setLoading(false)
+            setLoading(false)
         }
         getCities()
     }, [])
 
-    // if (loading) {
-    //     return <Loader/>
-    // }
+    if (loading) {
+        return <Loader/>
+    }
 
     const captionCity = (e) => {
         props.filterCities(e)
@@ -37,37 +38,39 @@ const Cities = (props) => {
     return (
         <SafeAreaView style={styles.mainContainer}>
                 <View>
-                    <Text>Find Your Adventure!</Text>
+                    <Text style={styles.citiesTitle}>Find Your Adventure!</Text>
                 </View>
                 <TouchableWithoutFeedback onPress={() => {
                     Keyboard.dismiss()
                 }}>
-                    <View>
-                        <TextInput onChangeText = {captionCity} placeholder='Where would you like to go?'/>
+                    <View style={styles.boxSearch}>
+                        <FontAwesome style={styles.iconsearch} name="search" size={24} color="orange" /><TextInput style={styles.search} onChangeText = {captionCity} placeholder='Where would you like to go?'/>
                     </View>
                 </TouchableWithoutFeedback>
                 <ScrollView>
+                <View style={styles.citiesScroll}>
                 {(props.searchedCities.length !== 0) ? props.searchedCities.map ((city, index) => {
                 return (
-                    <View key={index}>
+                    <View style={styles.boxCity} key={index}>
                         <TouchableOpacity onPress={() => {
                                 props.navigation.navigate('city', {
                                     id: city._id
                                 })
                             }}>
                             <View>
-                                <ImageBackground source={{uri:`https://nd-mytinerary.herokuapp.com/assets/fotos/${city.img}`}} style={styles.boxCity}>
-                                    <Text>{city.features}</Text>
+                                <ImageBackground source={{uri:`https://nd-mytinerary.herokuapp.com/assets/fotos/${city.img}`}} style={styles.cityBackground}>
+                                    <Text style={styles.cityName}>{city.name}</Text>
                                 </ImageBackground>
                             </View>
                         </TouchableOpacity>
                     </View>
                 )
-            }): <View >
-                    {/* <Image src="/assets/ups.png"/> */}
-                    <Text>Sorry, that city was not found. Try again!</Text>
+            }): <View style={styles.boxUps}>
+                    <Image source={{uri:'https://i.postimg.cc/Lsx9ycdg/ups.png'}} style={styles.ups}/>
+                    <Text style={styles.textUps}>Sorry, that city was not found.</Text>
                 </View>
             }
+            </View>
         </ScrollView>
         <Footer />       
         </SafeAreaView>
@@ -76,13 +79,72 @@ const Cities = (props) => {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        // marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
         flex: 1
     },
+    citiesScroll: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    citiesTitle:{
+        color: 'orange',
+        fontSize: 25,
+        fontWeight: '700',
+        textAlign: 'center',
+        marginVertical: '5%'
+    },
+    search: {
+        fontSize: 16,
+        fontWeight: '500',
+        padding: '3%',
+        color: 'orange'
+    },
+    boxSearch: {
+        borderColor: 'grey',
+        borderWidth: 1,
+        width: '80%',
+        borderRadius: 25,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: '2%'
+    },
+    iconsearch: {
+        padding: '2%'
+    },
     boxCity: {
-        width: 50,
-        height: 50,
+        width: '85%',
+        borderRadius: 15,
+        height: 150,
+        marginVertical: '3%'
+    },
+    cityBackground: {
+        width: '100%',
+        height: '100%',
         resizeMode: 'cover',
+        borderRadius: 15,
+        justifyContent: 'flex-end'
+    },
+    cityName: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '600',
+        textAlign: 'center',
+        padding: '2%',
+        backgroundColor: 'orange'
+    },
+    ups: {
+        width: 120,
+        height: 150
+    },
+    textUps: {
+        color: 'orange',
+        fontWeight: '500',
+        fontSize: 18
+    },
+    boxUps: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '20%'
     }
 })
 

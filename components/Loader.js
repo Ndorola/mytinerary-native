@@ -1,16 +1,19 @@
 import React from "react"
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, StatusBar, Platform } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet, ImageBackground} from 'react-native'
 
 const Loader = () => {
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <View className="loaderBox">
-                <Text>Loading...</Text>
-                {/* <Image src={"/assets/search.gif"}/> */}
-            </View>
-        </SafeAreaView>
+        <ImageBackground source={{uri:'https://i.postimg.cc/ncw3c6cn/loader.png'}} style={styles.loader}></ImageBackground>
     )
 }
 
 export default Loader
+
+const styles = StyleSheet.create({
+    loader: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})

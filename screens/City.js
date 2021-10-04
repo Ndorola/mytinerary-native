@@ -1,17 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Footer from "../components/Footer";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import itinerariesActions from "../redux/actions/itinerariesAction";
 import Itinerary from "../components/Itinerary";
+import Loader from '../components/Loader';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const City = (props) => {
     // console.log(props)
     const city = props.citiesList.find((city) => city._id === props.route.params.id)
     
-    // const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function getItineraries() {
@@ -20,7 +22,7 @@ const City = (props) => {
             } catch(error) {
                 console.log('Oops! There was a mistake')
             }
-            // setLoading(false)
+            setLoading(false)
         }
         getItineraries()
     }, [])
@@ -36,39 +38,28 @@ const City = (props) => {
     //     return false
     // }
     
-    // if (loading) {
-    //     <Loader/>
-    // }
+    if (loading) {
+        <Loader/>
+    }
 
     let itineraries = props.itinerariesList.filter((itinerary) => itinerary.cityId === props.route.params.id)
     // console.log(itineraries)
 
     return (
         <>
-            <View >
-                {/* <View className="headerCity">
-                    <nav id="navBar">
-                        <NavLink exact to = "/"><p>Home</p></NavLink>
-                        <NavLink to = "/cities"><p>Cities</p></NavLink>
-                        {!props.token && <NavLink to = "/signup"><p>Sign up</p></NavLink>}
-                        {!props.token && <NavLink to = "/signin"><p>Sign in</p></NavLink>}
-                        {props.token && <p className="pNav" onClick={() => props.signOut()}>Sign Out</p>} 
-                    </nav>
-                    <View className="userBox">
-                        {props.token && <Text className="welcomeUser">Welcome {props.name}!</Text>}
-                        <Text to = "/user">{props.token ? <Image id="user" src={`${props.url}`}/> : <Image id="user" src="/assets/iconUser.png" alt="iconUser"/>}</Text>
-                    </View>
-                </View> */}
-                <View>
-                    <Text>Welcome to {city.name}</Text>
-                </View>
+            <View style={styles.boxHero}>
+                <ImageBackground source={{uri:`https://nd-mytinerary.herokuapp.com/assets/fotos/${city.img}`}} style={styles.hero}>
+                    <Text style={styles.textWelcome}>Welcome to {city.name} {props.name}!</Text>
+                </ImageBackground>
             </View>
-            {(itineraries.length !== 0) ? itineraries.map((itinerary, index) => <Itinerary key={index} city={city.name} it={itinerary}/>)
-                : <View >
-                    {/* <Image src="/assets/ups.png"/> */}
-                    <Text>Sorry, this city has no itineraries. Back to home!</Text>
-                </View>
-            }           
+            <ScrollView> 
+                {(itineraries.length !== 0) ? itineraries.map((itinerary, index) => <Itinerary key={index} city={city.name} it={itinerary}/>)
+                    : <View style={styles.boxUps}>
+                        <Image source={{uri:'https://i.postimg.cc/Lsx9ycdg/ups.png'}} style={styles.ups}/>
+                        <Text style={styles.textUps}>Sorry, this city has no itineraries for now.</Text>
+                    </View>
+                }     
+            </ScrollView>      
         </>
     )
 }
@@ -89,3 +80,40 @@ const mapDispatchToProps = {
 }
 
 export default connect (mapStateToProps, mapDispatchToProps)(City)
+
+const styles = StyleSheet.create({
+    boxHero: {
+        width: '100%',
+        height: '40%',
+        marginBottom: '1.5%'
+    },
+    hero: {
+        height: '100%',
+        resizeMode: 'cover',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    textWelcome: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '600',
+        textAlign: 'center',
+        padding: '2%',
+        backgroundColor: 'orange',
+        width: '100%'
+    },
+    ups: {
+        width: 120,
+        height: 150
+    },
+    textUps: {
+        color: 'orange',
+        fontWeight: '500',
+        fontSize: 18
+    },
+    boxUps: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '5%'
+    }
+})

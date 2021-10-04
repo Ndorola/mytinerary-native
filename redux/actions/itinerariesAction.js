@@ -13,19 +13,6 @@ const itinerariesActions = {
         }
     },
 
-    // getActivities: (id) => {
-    //     console.log('estoy en la action')
-    //     return async (dispatch) => {
-    //             let response = await axios.get(`https://nd-mytinerary.herokuapp.com/api/activities/${id}`)
-    //             let data = response.data.response
-    //             console.log(response.data.response + ' action')
-    //             return data
-    //             // if (!response.data.success) {
-    //             //     throw new Error ('Ups! The server is down'),
-    //             //     console.log('Ups! The server is down')
-    //             // }
-    //     }
-    // },
     getActivities: (id)=>{
         return async (dispatch, getState)=>{
             try{
