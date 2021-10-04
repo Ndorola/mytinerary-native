@@ -74,6 +74,9 @@ const SignUp = (props) => {
             <ImageBackground source={{uri:'https://i.postimg.cc/tCWFSBsX/logueo.png'}} style={styles.background}>
             <View style={styles.mainForm} action="/users/signup" method="POST">
                 <View style={styles.form}>
+                <TouchableWithoutFeedback onPress={() => {
+                    Keyboard.dismiss()
+                }}>
                         <Input
                         style={styles.input}
                         leftIcon={
@@ -87,11 +90,15 @@ const SignUp = (props) => {
                         type="text"
                         placeholder="First name"
                         onChange={(e) => setAddUser({...addUser, name: e.nativeEvent.text})}
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'
                         />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => {
+                    Keyboard.dismiss()
+                }}>
                         <Input
                         style={styles.input}
                         leftIcon={
@@ -105,11 +112,15 @@ const SignUp = (props) => {
                         type="text"
                         placeholder="Last name"
                         onChange={(e) => setAddUser({...addUser, lastName: e.nativeEvent.text})}
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'
                         />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => {
+                    Keyboard.dismiss()
+                }}>
                         <Input
                         style={styles.input}
                         leftIcon={
@@ -123,11 +134,37 @@ const SignUp = (props) => {
                         type="email"
                         placeholder="Email"
                         onChange={(e) => setAddUser({...addUser, email: e.nativeEvent.text})}
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'
                         />
+                </TouchableWithoutFeedback>       
+                <TouchableWithoutFeedback onPress={() => {
+                    Keyboard.dismiss()
+                }}>
+                        <Input
+                        style={styles.input}
+                        leftIcon={
+                            <Icon
+                            name='lock'
+                            size={24}
+                            color='orange'
+                            />
+                        }
+                        name="url"
+                        type="text"
+                        placeholder="Url image"
+                        onChange={(e) => setAddUser({...addUser, url: e.nativeEvent.text})}
+                        errorStyle={{ color: 'transparent' }}
+                        errorMessage='ENTER A VALID ERROR HERE'
+                        color= 'orange'
+                        placeholderTextColor= 'grey'
+                        />
+                </TouchableWithoutFeedback>        
+                <TouchableWithoutFeedback onPress={() => {
+                    Keyboard.dismiss()
+                }}>
                         <Input
                         style={styles.input}
                         leftIcon={
@@ -143,11 +180,12 @@ const SignUp = (props) => {
                         placeholder="Password"
                         onChange={(e) => setAddUser({...addUser, password: e.nativeEvent.text})}
                         keyboardType= 'numeric'
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'
                         />
+                </TouchableWithoutFeedback>        
                         <RNPickerSelect
                             style={pickerStyle}
                             color= 'orange'
@@ -296,7 +334,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     textAction: {
-        color: 'orange',
+        color: 'white',
         fontSize: 16,
         fontWeight: '600'
     }

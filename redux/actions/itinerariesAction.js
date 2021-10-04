@@ -14,7 +14,7 @@ const itinerariesActions = {
     },
 
     getActivities: (id)=>{
-        return async (dispatch, getState)=>{
+        return async (dispatch)=>{
             try{
                 // console.log(itineraryId)
                 let response = await axios.get(`https://nd-mytinerary.herokuapp.com/api/activities/${id}`)

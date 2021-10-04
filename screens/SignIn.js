@@ -59,7 +59,7 @@ const SignIn = (props) => {
                         type="email"
                         placeholder="Email"
                         onChange={(e) => setAddUser({...addUser, email: e.nativeEvent.text})}
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'
@@ -79,7 +79,7 @@ const SignIn = (props) => {
                         placeholder="Password"
                         onChange={(e) => setAddUser({...addUser, password: e.nativeEvent.text})}
                         keyboardType= 'numeric'
-                        errorStyle={{ color: 'red' }}
+                        errorStyle={{ color: 'transparent' }}
                         errorMessage='ENTER A VALID ERROR HERE'
                         color= 'orange'
                         placeholderTextColor= 'grey'

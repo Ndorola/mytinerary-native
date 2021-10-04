@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native'
 import Footer from "../components/Footer"
-// import MyCarousel from '../components/MyCarousel'
+import MyCarousel from '../components/MyCarousel'
 
 const Welcome = (props) => {
     return (
@@ -19,7 +19,7 @@ const Welcome = (props) => {
                 </ImageBackground>
             </View>
             <View style={styles.boxCarousel}>
-                {/* <MyCarousel /> */}
+                <MyCarousel />
             </View>
             </ScrollView>
             <Footer />

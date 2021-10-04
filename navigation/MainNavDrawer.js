@@ -77,7 +77,7 @@ const Navigator = (props) => {
                 headerStyle: {
                 backgroundColor: 'white'
                 },
-                headerLeft: () => null,
+                // headerLeft: () => null,
                 headerRight: () => <View>
                 <Button onPress={() => props.navigation.goBack()} title="Go back" />
                 </View>

@@ -13,7 +13,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 const Itinerary = (props) => {
     // console.log(props)
-    const [activities, setActivities] = useState()
+    const [activities, setActivities] = useState({activities:[]})
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(true)
     
@@ -38,6 +38,11 @@ const Itinerary = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [visible]);
         console.log(activities)
+
+        if (loading) {
+            <Loader/>
+        }
+    
         
         // const [liked, setLiked] = useState(it.likes)
         
@@ -133,10 +138,6 @@ const Itinerary = (props) => {
 //     setQuore(quore === false ? true : false);
 //   };
 
-    if (loading) {
-        <Loader/>
-    }
-
     return (
         <>  
             <View style={styles.mainItinerary}>
@@ -182,7 +183,7 @@ const Itinerary = (props) => {
                                 </View>
                                 <View>
                                     {/* <Comment itId={it._id} comments={it.comments}/> */}
-                                    <Activities activities={activities}/>
+                                    <Activities it={it._id}/>
                                 </View>
                             </View>
                             : null}
